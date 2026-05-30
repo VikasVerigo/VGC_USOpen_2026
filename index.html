@@ -553,7 +553,7 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
         <tr>
           <th>#</th>
           <th>Player</th>
-          <th>Status</th>
+          <th></th>
           <th>PGA Pick 1</th>
           <th>PGA Pick 2</th>
         </tr>
@@ -981,7 +981,7 @@ function renderEntries() {
     <tr>
       <td>${i+1}</td>
       <td><span class="player-name">${p.name}</span></td>
-      <td>${p.paid?'<span class="paid-badge">✓ Paid</span>':'<span class="pick-tbd">Pending</span>'}</td>
+      <td></td>
       <td>${p.pgaPick1?`<span class="pick-name">${p.pgaPick1}</span>`:'<span class="pick-tbd">TBD</span>'}</td>
       <td>${p.pgaPick2?`<span class="pick-name">${p.pgaPick2}</span>`:'<span class="pick-tbd">TBD</span>'}</td>
     </tr>`).join('');
