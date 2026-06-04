@@ -251,6 +251,7 @@ tbody td:first-child{padding-left:1.4rem;font-weight:600;color:rgba(10,22,40,.35
 .lb-rank.r3{color:#a08050}
 .score-val{font-family:'Oswald',sans-serif;font-weight:600;font-size:.95rem}
 .score-tbd{color:rgba(10,22,40,.3);font-style:italic;font-size:.8rem}
+.score-mc{color:#b45309;font-size:.82rem;letter-spacing:.02em}
 .prize-val{color:#1e6b3a;font-weight:700;font-family:'Oswald',sans-serif}
 .winner-row td{background:#fffbef !important}
 tbody tr.winner-row:nth-child(even) td{background:#fffbef !important}
@@ -758,59 +759,64 @@ const config = {
      hcpR2 / grossR2      — Member Round 2 handicap + gross score
      pgaTotal1            — Pick 1 total strokes (4 rounds, or MC penalty)
      pgaTotal2            — Pick 2 total strokes
+     missedR1 / missedR2  — set true if member missed that week; net score = +10
    All null = not yet available.
    ──────────────────────────────────────────────────────────────────────── */
 const players = [
-  { name:"Alessandro Carnovale", paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Anthony Mauro",        paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Brian Graham",         paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Claude Nobauer",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Dave Terry",           paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"David Akins",          paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Dean Collier",         paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Edwin Margawang",      paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Enrique Quiroga",      paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Fady Hayek",           paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Frank Bruno",          paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Giovanni Guzzo",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Jim Hopkins",          paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Joe Guzzo",            paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Johnny Nardi",         paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Karim Esmail",         paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Ken Atkinson",         paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Ken Ghag",             paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Lindsay Brooks",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Lyle Pidzarko",        paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Mark Halvorsen",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Martin Cordeiro",      paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Michael Ohlmann",      paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Mike Marino",          paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Mike Kirilenko",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Mike Cordoba",         paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Navraj Kahlon",        paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Paul Aucoin",          paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Peter Bogdanich",      paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Rick Ripoli",          paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Robert Lee",           paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Russ Davidson",        paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Stefano Ruscitti",     paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Stephen Nielsen",      paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Tom Kenny",            paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Tom Englmaier",        paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Vadym Lupulyak",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Vikas Patel",          paid:true,  pgaPick1:"Collin Morikawa", pgaPick2:"Xander Schauffele", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Wayne Davidson",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Ryan Shmyr",            paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
-  { name:"Kyle Ulinder",          paid:true,  pgaPick1:"Ludvig Aberg", pgaPick2:"Jon Rahm", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null },
+  { name:"Alessandro Carnovale", paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Anthony Mauro",        paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Brian Graham",         paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Claude Nobauer",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Dave Terry",           paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"David Akins",          paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Dean Collier",         paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Edwin Margawang",      paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Enrique Quiroga",      paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Fady Hayek",           paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Frank Bruno",          paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Giovanni Guzzo",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Jim Hopkins",          paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Joe Guzzo",            paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Johnny Nardi",         paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Karim Esmail",         paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Ken Atkinson",         paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Ken Ghag",             paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Lindsay Brooks",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Lyle Pidzarko",        paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Mark Halvorsen",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Martin Cordeiro",      paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Michael Ohlmann",      paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Mike Marino",          paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Mike Kirilenko",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Mike Cordoba",         paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Navraj Kahlon",        paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Paul Aucoin",          paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Peter Bogdanich",      paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Rick Ripoli",          paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Robert Lee",           paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Russ Davidson",        paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Russ Davidson (2)",   paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Stefano Ruscitti",     paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Stephen Nielsen",      paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Tom Kenny",            paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Tom Englmaier",        paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Vadym Lupulyak",       paid:false, pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Vikas Patel",          paid:true,  pgaPick1:"Collin Morikawa", pgaPick2:"Xander Schauffele", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Wayne Davidson",       paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Ryan Shmyr",           paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Kyle Ulinder",         paid:true,  pgaPick1:"Ludvig Aberg", pgaPick2:"Jon Rahm", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Jordon Belton",        paid:true,  pgaPick1:"", pgaPick2:"", grossR1:null, hcpR1:null, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
 ];
 
 /* ── SCORE HELPERS ───────────────────────────────────────────────────── */
-function netScore(gross, hcp) {
+const MISSED_ROUND_PENALTY = 10;
+function netScore(gross, hcp, missed) {
+  if (missed) return MISSED_ROUND_PENALTY;
   return (gross == null || hcp == null) ? null : gross - hcp;
 }
 function combinedScore(p) {
-  const n1 = netScore(p.grossR1, p.hcpR1);
-  const n2 = netScore(p.grossR2, p.hcpR2);
+  const n1 = netScore(p.grossR1, p.hcpR1, p.missedR1);
+  const n2 = netScore(p.grossR2, p.hcpR2, p.missedR2);
   if (n1 == null || n2 == null || p.pgaTotal1 == null || p.pgaTotal2 == null) return null;
   return n1 + n2 + p.pgaTotal1 + p.pgaTotal2;
 }
@@ -854,10 +860,10 @@ let prevRanks = {}; // name -> previous rank
 
 /* ── RENDER: LEADERBOARD ─────────────────────────────────────────────── */
 function renderLeaderboard() {
-  const data = players.map(p => ({
+  const data = players.filter(p => p.paid).map(p => ({
     ...p,
-    netR1: netScore(p.grossR1, p.hcpR1),
-    netR2: netScore(p.grossR2, p.hcpR2),
+    netR1: netScore(p.grossR1, p.hcpR1, p.missedR1),
+    netR2: netScore(p.grossR2, p.hcpR2, p.missedR2),
     combined: combinedScore(p),
     prize: 0
   }));
@@ -899,6 +905,7 @@ function renderLeaderboard() {
   });
 
   const fmtScore = v => v != null ? `<span class="score-val">${v}</span>` : `<span class="score-tbd">—</span>`;
+  const fmtNet = (v, missed) => missed ? `<span class="score-val score-mc" title="Missed round penalty">+10 MC</span>` : fmtScore(v);
   let html = '';
 
   allData.forEach(p => {
@@ -923,10 +930,10 @@ function renderLeaderboard() {
     html += `<tr class="${p.rank === 1 ? 'winner-row' : ''}">
       <td><div class="rank-cell"><div class="lb-rank ${rankClass}">${rankLabel}</div>${moveHtml}</div></td>
       <td><span class="player-name">${p.name}</span></td>
-      <td>${fmtScore(p.netR1)}</td>
+      <td>${fmtNet(p.netR1, p.missedR1)}</td>
       <td>${p.pgaPick1 || '<span class="score-tbd">TBD</span>'}</td>
       <td>${p.pgaPick2 || '<span class="score-tbd">TBD</span>'}</td>
-      <td>${fmtScore(p.netR2)}</td>
+      <td>${fmtNet(p.netR2, p.missedR2)}</td>
       <td>${fmtScore(p.combined)}</td>
       <td>${prizeDisp}</td>
     </tr>`;
@@ -979,7 +986,7 @@ function renderLeaderboard() {
 
 /* ── RENDER: ENTRIES ─────────────────────────────────────────────────── */
 function renderEntries() {
-  document.getElementById('entry-tbody').innerHTML = players.map((p,i)=>`
+  document.getElementById('entry-tbody').innerHTML = players.filter(p=>p.paid).map((p,i)=>`
     <tr>
       <td>${i+1}</td>
       <td><span class="player-name">${p.name}</span></td>
