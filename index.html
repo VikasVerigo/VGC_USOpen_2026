@@ -395,6 +395,59 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
   .move-nc{color:#888;font-size:.65rem;margin-left:.3rem}
   .rank-cell{display:flex;align-items:center;gap:.3rem}
 
+  /* ── SEARCH BOX ───────────────────────────────────────────────────── */
+  .lb-search-wrap{margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+  .lb-search{width:100%;max-width:280px;padding:.45rem .75rem;border:1.5px solid rgba(10,22,40,.2);border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-size:.85rem;color:var(--navy);background:#fff;outline:none;transition:border-color .2s}
+  .lb-search:focus{border-color:var(--gold)}
+  .lb-search-clear{background:none;border:none;cursor:pointer;color:rgba(10,22,40,.4);font-size:1rem;line-height:1;padding:.2rem;transition:color .15s}
+  .lb-search-clear:hover{color:var(--navy)}
+
+  /* ── PENDING PICKS ALERT ──────────────────────────────────────────── */
+  .pending-picks-box{margin-top:1.5rem;background:#fef3c7;border:1.5px solid #d97706;border-radius:6px;padding:1rem 1.25rem}
+  .pending-picks-title{font-size:.8rem;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#92400e;margin-bottom:.5rem}
+  .pending-picks-names{display:flex;flex-wrap:wrap;gap:.4rem}
+  .pending-pick-chip{background:#fff;border:1px solid #d97706;border-radius:20px;padding:.25rem .7rem;font-size:.78rem;color:#92400e;font-weight:600}
+
+  /* ── PICK POPULARITY ──────────────────────────────────────────────── */
+  .pop-section{margin-top:2rem}
+  .pop-title{font-size:.8rem;font-weight:700;font-family:'Oswald',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);opacity:.6;margin-bottom:.75rem}
+  .pop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.5rem}
+  .pop-card{background:#fff;border:1px solid rgba(10,22,40,.1);border-radius:var(--radius);padding:.55rem .9rem;display:flex;align-items:center;gap:.7rem}
+  .pop-bar-wrap{flex:1;height:6px;background:rgba(10,22,40,.08);border-radius:3px;overflow:hidden}
+  .pop-bar{height:100%;background:var(--gold);border-radius:3px;transition:width .5s ease}
+  .pop-name{font-size:.82rem;font-weight:600;color:var(--navy);min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pop-count{font-size:.78rem;font-weight:700;color:var(--gold);white-space:nowrap}
+
+  /* ── LIVE US OPEN LINK ────────────────────────────────────────────── */
+  .live-link-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:var(--gold);font-family:'Oswald',sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;padding:.6rem 1.2rem;border-radius:var(--radius);border:1.5px solid var(--gold);text-decoration:none;transition:background .2s,color .2s;margin-top:1.25rem}
+  .live-link-btn:hover{background:var(--gold);color:var(--navy)}
+  .live-link-btn .live-dot{width:8px;height:8px;border-radius:50%;background:#e74c3c;animation:pulse 1.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+
+  /* ── COUNTDOWN TIMER ──────────────────────────────────────────────── */
+  .countdown-wrap{background:var(--navy);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;text-align:center}
+  .countdown-label{font-family:'Oswald',sans-serif;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem}
+  .countdown-digits{display:flex;justify-content:center;gap:1rem}
+  .cd-unit{display:flex;flex-direction:column;align-items:center;gap:.2rem}
+  .cd-num{font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;color:var(--cream);line-height:1;min-width:2.5ch;text-align:center}
+  .cd-lbl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+  .cd-sep{font-family:'Oswald',sans-serif;font-size:1.8rem;color:var(--gold);line-height:1;align-self:flex-start;margin-top:.15rem}
+  .countdown-expired{font-family:'Oswald',sans-serif;font-size:1rem;color:#e74c3c;letter-spacing:.08em;text-transform:uppercase}
+
+  /* ── MOBILE TABLE FIX ─────────────────────────────────────────────── */
+  @media(max-width:700px){
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    #lb-table{min-width:640px}
+    .tab-nav{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start}
+    .tab-btn{flex-shrink:0}
+    .pop-grid{grid-template-columns:1fr 1fr}
+    .cd-num{font-size:1.5rem}
+  }
+  @media(max-width:480px){
+    .pop-grid{grid-template-columns:1fr}
+    .countdown-digits{gap:.5rem}
+  }
+
 </style>
 </head>
 <body>
@@ -518,6 +571,19 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
     <span class="lb-status-note" id="lb-status-note">Leaderboard activates after Round 1 (Jun 17)</span>
   </div>
 
+  <!-- SEARCH BOX -->
+  <div class="lb-search-wrap">
+    <input class="lb-search" id="lb-search" type="text" placeholder="🔍  Find your name…" oninput="filterLeaderboard(this.value)" autocomplete="off">
+    <button class="lb-search-clear" onclick="clearSearch()" title="Clear">✕</button>
+  </div>
+
+  <!-- LIVE US OPEN LINK -->
+  <div id="live-link-wrap">
+    <a class="live-link-btn" href="https://www.pgatour.com/tournaments/2026/u-s-open/R2026026" target="_blank" rel="noopener">
+      <span class="live-dot"></span> Watch Live Scores — US Open
+    </a>
+  </div>
+
   <div class="table-wrap">
     <table id="lb-table">
       <thead>
@@ -535,6 +601,18 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
       </thead>
       <tbody id="lb-tbody"></tbody>
     </table>
+  </div>
+
+  <!-- PENDING PICKS ALERT -->
+  <div id="pending-picks-box" class="pending-picks-box" style="display:none">
+    <div class="pending-picks-title">⚠️ Picks not yet submitted</div>
+    <div class="pending-picks-names" id="pending-picks-names"></div>
+  </div>
+
+  <!-- PICK POPULARITY -->
+  <div class="pop-section">
+    <div class="pop-title">📊 Most Popular Picks</div>
+    <div class="pop-grid" id="pop-grid"></div>
   </div>
 
 </div>
@@ -736,6 +814,21 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
   <div class="section-eyebrow">PGA Picks</div>
   <h2 class="section-title">Submit Your <em>Picks</em></h2>
   <div class="section-rule"></div>
+
+  <!-- COUNTDOWN TIMER -->
+  <div class="countdown-wrap">
+    <div class="countdown-label">⏰ Picks close — Thursday June 18 at 3am</div>
+    <div class="countdown-digits" id="countdown-digits">
+      <div class="cd-unit"><span class="cd-num" id="cd-days">--</span><span class="cd-lbl">Days</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cd-hours">--</span><span class="cd-lbl">Hours</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cd-mins">--</span><span class="cd-lbl">Mins</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-lbl">Secs</span></div>
+    </div>
+  </div>
+
   <p style="margin-bottom:1rem;color:rgba(10,22,40,.65);font-size:.9rem;line-height:1.6">
     Choose 2 PGA players from the confirmed US Open field. Both scores count. Picks close <strong>June 18 at 3am</strong> — no changes after that.
     Not sure who to pick? Check the <a href="https://www.owgr.com/current-world-ranking" target="_blank" rel="noopener" style="color:#1a56db;text-decoration:underline;font-weight:600">Official World Golf Rankings ↗</a> to see the full field ranked by OWGR.
@@ -1057,7 +1150,7 @@ const rules = [
   { q:"Who can enter?",
     a:"Any <strong>VGC Men's Night 2026 season member</strong>. Entry is optional — it's a side tournament alongside the main season-long Stableford competition. Entry fee is $20." },
   { q:"When must I submit my PGA picks?",
-    a:"Before the <strong>first ball is struck at the June 17 Men's Night round</strong>. No changes are permitted after that. You choose any two players competing in the 2026 US Open at Shinnecock Hills." },
+    a:"Picks close <strong>Thursday June 18 at 3am</strong>. No changes are permitted after that. You choose any two players competing in the 2026 US Open at Shinnecock Hills." },
   { q:"Which players am I NOT allowed to pick?",
     a:"The <strong>top 5 players in the Official World Golf Ranking</strong> at the time of entry are ineligible. This levels the playing field — everyone already knows these players are the favourites. The five excluded players are: <strong>Scottie Scheffler (1), Rory McIlroy (2), Cameron Young (3), Matt Fitzpatrick (4), and Russell Henley (5)</strong>. Any pick naming one of these players will be ruled invalid and you will need to resubmit before June 18 at 3am." },
   { q:"How is the member net score calculated?",
@@ -1067,7 +1160,7 @@ const rules = [
   { q:"What happens if my PGA pick misses the cut?",
     a:"A missed-cut player only completes rounds 1 and 2. Their rounds 3 and 4 are each assigned <strong>80 strokes</strong> as a penalty. Their 4-round total = actual R1 + actual R2 + 80 + 80." },
   { q:"How are ties handled?",
-    a:"Prize money for tied positions is <strong>split equally</strong>. Example: a 2-way tie for 1st and 2nd → ($200 + $150) ÷ 2 = $175 each." },
+    a:"If two or more participants finish with the same combined score, the <strong>tiebreaker is the lower total of their two PGA pick scores</strong>. If still tied after that, the <strong>lower VGC net score</strong> from Round 1 (June 17) decides it. If still equal, prize money for the tied positions is <strong>split equally</strong>. Example: a 2-way tie for 1st and 2nd → ($200 + $150) ÷ 2 = $175 each." },
   { q:"When are payouts made?",
     a:"Prizes will be determined once all entries are confirmed. Payouts are made after the <strong>June 24 Men's Night round</strong> once all scores are verified." }
 ];
@@ -1114,6 +1207,73 @@ function switchTab(id) {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+/* ── LEADERBOARD SEARCH ──────────────────────────────────────────────── */
+function filterLeaderboard(query) {
+  const q = query.trim().toLowerCase();
+  document.querySelectorAll('#lb-tbody tr').forEach(row => {
+    const name = row.querySelector('.player-name');
+    if (!name) { row.style.display=''; return; }
+    row.style.display = (!q || name.textContent.toLowerCase().includes(q)) ? '' : 'none';
+  });
+}
+function clearSearch() {
+  document.getElementById('lb-search').value = '';
+  filterLeaderboard('');
+}
+
+/* ── PENDING PICKS ───────────────────────────────────────────────────── */
+function renderPendingPicks() {
+  const missing = players.filter(p => p.paid && !p.pgaPick1);
+  const box = document.getElementById('pending-picks-box');
+  if (!missing.length) { box.style.display='none'; return; }
+  box.style.display = 'block';
+  document.getElementById('pending-picks-names').innerHTML =
+    missing.map(p=>`<span class="pending-pick-chip">${p.name}</span>`).join('');
+}
+
+/* ── PICK POPULARITY ─────────────────────────────────────────────────── */
+function renderPickPopularity() {
+  const counts = {};
+  players.filter(p=>p.paid).forEach(p=>{
+    if(p.pgaPick1) counts[p.pgaPick1] = (counts[p.pgaPick1]||0)+1;
+    if(p.pgaPick2) counts[p.pgaPick2] = (counts[p.pgaPick2]||0)+1;
+  });
+  const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  if(!sorted.length){ document.querySelector('.pop-section').style.display='none'; return; }
+  const max = sorted[0][1];
+  document.getElementById('pop-grid').innerHTML = sorted.map(([name,n])=>`
+    <div class="pop-card">
+      <div class="pop-name" title="${name}">${name}</div>
+      <div class="pop-bar-wrap"><div class="pop-bar" style="width:${Math.round(n/max*100)}%"></div></div>
+      <div class="pop-count">${n}×</div>
+    </div>`).join('');
+}
+
+/* ── COUNTDOWN TIMER ─────────────────────────────────────────────────── */
+function startCountdown() {
+  // June 18, 2026 3:00 AM Pacific time (UTC-7 in June)
+  const deadline = new Date('2026-06-18T10:00:00Z'); // 3am PDT = 10:00 UTC
+  function tick() {
+    const now = new Date();
+    const diff = deadline - now;
+    if (diff <= 0) {
+      document.getElementById('countdown-digits').innerHTML =
+        '<span class="countdown-expired">🔒 Picks are closed</span>';
+      return;
+    }
+    const d = Math.floor(diff/86400000);
+    const h = Math.floor((diff%86400000)/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+    document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
 /* ── INIT ────────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', ()=>{
   updateTicker();
@@ -1121,6 +1281,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   renderEntries();
   renderPayouts();
   renderRules();
+  renderPendingPicks();
+  renderPickPopularity();
+  startCountdown();
 
   // Tab button clicks
   document.querySelectorAll('.tab-btn').forEach(btn=>{
