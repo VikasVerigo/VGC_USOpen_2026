@@ -259,7 +259,7 @@ tbody td:first-child{padding-left:1.4rem;font-weight:600;color:rgba(10,22,40,.35
 tbody tr.winner-row:nth-child(even) td{background:#fffbef !important}
 
 /* ── PAYOUT CARDS ────────────────────────────────────────────────────── */
-.payout-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:2.5rem}
+.payout-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.5rem}
 @media(max-width:700px){.payout-grid{grid-template-columns:repeat(2,1fr)}}
 .payout-card{
   background:#fff;border:1px solid rgba(10,22,40,.1);border-radius:var(--radius);
@@ -382,7 +382,7 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
   .hl-dot.active{background:var(--gold)}
 
   /* ── SORTABLE TABLE HEADERS ───────────────────────────────────────── */
-  .score-under{color:#166534;font-weight:700} .score-over{color:#991b1b;font-weight:700} .score-even{color:var(--navy);font-weight:700}
+  .score-under{color:#166534;font-weight:700} .score-over{color:#991b1b;font-weight:700} .score-even{color:var(--navy);font-weight:700} .pick-score{font-size:.8rem;font-weight:700;margin-left:.25rem}
   .th-sort{cursor:pointer;white-space:nowrap;transition:background .15s}
   .th-sort:hover{background:rgba(201,160,32,.15)}
   .th-sort.sort-asc .sort-ico::after{content:' ▲'}
@@ -593,7 +593,6 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
           <th class="th-sort" data-col="pick1"   data-dir="asc">US Open Pick 1 <span class="sort-ico">↕</span></th>
           <th class="th-sort" data-col="pick2"   data-dir="asc">US Open Pick 2 <span class="sort-ico">↕</span></th>
           <th class="th-sort" data-col="netR2"   data-dir="asc">Jun 24 Net <span class="sort-ico">↕</span></th>
-          <th class="th-sort" data-col="combined" data-dir="asc">Total <span class="sort-ico">↕</span></th>
           <th class="th-sort" data-col="totalToPar" data-dir="asc">To Par <span class="sort-ico">↕</span></th>
           <th class="th-sort" data-col="prize"   data-dir="desc">Prize <span class="sort-ico">↕</span></th>
         </tr>
@@ -789,9 +788,7 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
   <h2 class="section-title">Payout <em>Structure</em></h2>
   <div class="section-rule"></div>
 
-  <div style="text-align:center;padding:3rem 1rem;color:rgba(10,22,40,.45);font-family:'Playfair Display',serif;font-size:1.15rem;font-style:italic;letter-spacing:.03em">
-    To be determined when entries are completed.
-  </div>
+  <div id="payout-grid"></div>
 
   <!-- Rules accordion -->
   <div style="margin-top:3.5rem">
@@ -861,7 +858,7 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
 /* ── CONFIG ──────────────────────────────────────────────────────────── */
 const config = {
   entryFee: 20,
-  payouts: [200, 150, 100, 80, 70, 60, 50, 40, 30, 20],
+  payouts: [200, 150, 100, 80, 60, 40, 30, 20],
   /* status: "picks-locked" | "picks-locked" | "r1-done" |
              "pga-live" | "r2-pending" | "final"           */
   status: "picks-locked"
@@ -914,6 +911,33 @@ const players = [
   { name:"Wayne Davidson",       paid:true,  paymentStatus:"Yes",     pgaPick1:"Patrick Reed", pgaPick2:"Tommy Fleetwood", grossR1:82, hcpR1:5, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
 ];
 
+/* ── PGA SCORES (update daily — to-par cumulative) ───────────────────── */
+// Round 1 complete. Update totals each day as rounds finish.
+const pgaScores = {
+  "Aaron Rai":          4,
+  "Brooks Koepka":      3,
+  "Bryson DeChambeau":  0,
+  "Chris Gotterup":     5,
+  "Collin Morikawa":    3,
+  "Hideki Matsuyama":   1,
+  "J.J. Spaun":         7,
+  "Jon Rahm":          -2,
+  "Justin Rose":        1,
+  "Justin Thomas":      1,
+  "Ludvig Aberg":      -1,
+  "Patrick Cantlay":    4,
+  "Patrick Reed":       2,
+  "Sam Burns":          1,
+  "Si Woo Kim":         7,
+  "Tommy Fleetwood":    0,
+  "Tyrrell Hatton":     4,
+  "Xander Schauffele":  1,
+};
+function getPgaScore(name) {
+  if (!name) return null;
+  return pgaScores.hasOwnProperty(name) ? pgaScores[name] : null;
+}
+
 /* ── SCORE HELPERS ───────────────────────────────────────────────────── */
 // Format: BEST (lowest) of the two Wednesday net scores + PGA Pick 1 + PGA Pick 2.
 // Players only need to play one of the two rounds. missedR1/missedR2 = true means
@@ -930,15 +954,19 @@ function bestNet(p) {
 }
 function combinedScore(p) {
   const best = bestNet(p);
-  if (best == null || p.pgaTotal1 == null || p.pgaTotal2 == null) return null;
-  return best + p.pgaTotal1 + p.pgaTotal2;
+  const s1 = getPgaScore(p.pgaPick1);
+  const s2 = getPgaScore(p.pgaPick2);
+  if (best == null || s1 == null || s2 == null) return null;
+  return (best - PAR) + s1 + s2;
 }
 const PAR = 72;
 function totalToPar(p) {
   const best = bestNet(p);
   if (best == null) return null;
   const vgcTP = best - PAR;
-  if (p.pgaTotal1 != null && p.pgaTotal2 != null) return vgcTP + p.pgaTotal1 + p.pgaTotal2;
+  const s1 = getPgaScore(p.pgaPick1);
+  const s2 = getPgaScore(p.pgaPick2);
+  if (s1 != null && s2 != null) return vgcTP + s1 + s2;
   return vgcTP; // rank by VGC net-to-par until PGA scores arrive
 }
 
@@ -1040,6 +1068,14 @@ function renderLeaderboard() {
     const cls = v < 0 ? 'score-under' : 'score-over';
     return `<span class="score-val ${cls}">${v > 0 ? '+' : ''}${v}</span>`;
   };
+  const fmtPick = name => {
+    if (!name) return '<span class="score-tbd">TBD</span>';
+    const s = getPgaScore(name);
+    if (s == null) return `<span class="pick-name">${name}</span>`;
+    const cls = s < 0 ? 'score-under' : s > 0 ? 'score-over' : 'score-even';
+    const lbl = s === 0 ? 'E' : (s > 0 ? '+' : '') + s;
+    return `<span class="pick-name">${name}</span> <span class="pick-score ${cls}">${lbl}</span>`;
+  };
   const fmtNet = (v, missed, used) => {
     if (missed) return `<span class="score-tbd" title="Did not play">DNS</span>`;
     if (v == null) return `<span class="score-tbd">—</span>`;
@@ -1077,17 +1113,16 @@ function renderLeaderboard() {
       <td><span class="player-name">${p.name}</span></td>
       <td style="text-align:center">${paymentHtml}</td>
       <td>${fmtNet(p.netR1, p.missedR1, p.usedR1)}</td>
-      <td>${p.pgaPick1 ? `<span class="pick-name">${p.pgaPick1}</span>` : '<span class="score-tbd">TBD</span>'}</td>
-      <td>${p.pgaPick2 ? `<span class="pick-name">${p.pgaPick2}</span>` : '<span class="score-tbd">TBD</span>'}</td>
+      <td>${fmtPick(p.pgaPick1)}</td>
+      <td>${fmtPick(p.pgaPick2)}</td>
       <td>${fmtNet(p.netR2, p.missedR2, p.usedR2)}</td>
-      <td>${fmtScore(p.combined)}</td>
       <td>${fmtToPar(p.totalToPar)}</td>
       <td>${prizeDisp}</td>
     </tr>`;
   });
 
   document.getElementById('lb-tbody').innerHTML = html ||
-    `<tr><td colspan="10" style="text-align:center;padding:2rem;color:rgba(10,22,40,.3)">No scores yet — entries open</td></tr>`;
+    `<tr><td colspan="9" style="text-align:center;padding:2rem;color:rgba(10,22,40,.3)">No scores yet — entries open</td></tr>`;
 
   // Update prevRanks for next call
   prevRanks = currentRanks;
@@ -1144,7 +1179,30 @@ function renderEntries() {
 
 /* ── RENDER: PAYOUTS ─────────────────────────────────────────────────── */
 function renderPayouts() {
-  // Prizes to be determined — payout grid removed from HTML
+  const places = [
+    {pos:"1st", medal:"🥇", amount:200, note:"Winner"},
+    {pos:"2nd", medal:"🥈", amount:150, note:"Runner-up"},
+    {pos:"3rd", medal:"🥉", amount:100, note:"3rd place"},
+    {pos:"4th", medal:"",   amount:80,  note:"4th place"},
+    {pos:"5th", medal:"",   amount:60,  note:"5th place"},
+    {pos:"6th", medal:"",   amount:40,  note:"6th place"},
+    {pos:"7th", medal:"",   amount:30,  note:"7th place"},
+    {pos:"8th", medal:"",   amount:20,  note:"8th place"},
+  ];
+  const cards = places.map((p,i) => `
+    <div class="payout-card${i===0?' first':''}">
+      <div class="payout-place">${p.pos}</div>
+      ${p.medal ? `<div class="payout-medal">${p.medal}</div>` : '<div style="height:2.1rem"></div>'}
+      <div class="payout-amount">$${p.amount}</div>
+      <div class="payout-note">${p.note}</div>
+    </div>`).join('');
+  const total = places.reduce((s,p)=>s+p.amount,0);
+  const el = document.getElementById('payout-grid');
+  if (el) el.innerHTML = `
+    <div class="payout-grid" style="grid-template-columns:repeat(4,1fr)">${cards}</div>
+    <p style="text-align:center;margin-top:1.5rem;font-size:.85rem;color:rgba(10,22,40,.45)">
+      Prize pool: <strong>$${total}</strong> · 34 entries × $20 · Top 8 paid · Ties split equally
+    </p>`;
 }
 
 /* ── RENDER: RULES ───────────────────────────────────────────────────── */
