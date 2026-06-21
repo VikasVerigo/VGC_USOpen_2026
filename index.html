@@ -912,26 +912,26 @@ const players = [
 ];
 
 /* ── PGA SCORES (update daily — to-par cumulative) ───────────────────── */
-// Round 2 complete (cut +4). Round 3 starts Saturday Jun 21.
+// Round 3 in progress (Jun 20). Cut was +4. MC penalty: +10/round for R3+R4.
 const pgaScores = {
-  "Aaron Rai":          1,
-  "Brooks Koepka":     30,
-  "Bryson DeChambeau": 25,
-  "Chris Gotterup":     4,
-  "Collin Morikawa":   -2,
-  "Hideki Matsuyama":   4,
-  "J.J. Spaun":        28,
-  "Jon Rahm":          26,
-  "Justin Rose":        1,
-  "Justin Thomas":     -1,
-  "Ludvig Aberg":       1,
-  "Patrick Cantlay":   26,
-  "Patrick Reed":      25,
-  "Sam Burns":         -1,
-  "Si Woo Kim":        26,
-  "Tommy Fleetwood":    1,
-  "Tyrrell Hatton":     2,
-  "Xander Schauffele": -3,
+  "Aaron Rai":          3,   // R3 cumulative
+  "Brooks Koepka":     30,   // MC: R2 +10 + penalty +20
+  "Bryson DeChambeau": 25,   // MC: R2 +5  + penalty +20
+  "Chris Gotterup":     7,   // R3 cumulative
+  "Collin Morikawa":    1,   // R3 cumulative
+  "Hideki Matsuyama":  11,   // R3 cumulative
+  "J.J. Spaun":        28,   // MC: R2 +8  + penalty +20
+  "Jon Rahm":          26,   // MC: R2 +6  + penalty +20
+  "Justin Rose":        4,   // R3 cumulative
+  "Justin Thomas":      4,   // R3 cumulative
+  "Ludvig Aberg":       7,   // R3 cumulative
+  "Patrick Cantlay":   26,   // MC: R2 +6  + penalty +20
+  "Patrick Reed":      25,   // MC: R2 +5  + penalty +20
+  "Sam Burns":          0,   // R3 cumulative (E)
+  "Si Woo Kim":        26,   // MC: R2 +6  + penalty +20
+  "Tommy Fleetwood":    1,   // R3 cumulative
+  "Tyrrell Hatton":     4,   // R3 cumulative
+  "Xander Schauffele":  0,   // R3 cumulative (E)
 };
 function getPgaScore(name) {
   if (!name) return null;
