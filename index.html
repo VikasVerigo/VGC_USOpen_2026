@@ -274,6 +274,25 @@ tbody tr.winner-row:nth-child(even) td{background:#fffbef !important}
 .payout-amount{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold)}
 .payout-note{font-size:.72rem;color:rgba(10,22,40,.4);margin-top:.3rem}
 
+/* ── TOP 5 PODIUM ────────────────────────────────────────────────────── */
+.top5-wrap{margin:1.5rem 0 2rem}
+.top5-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem}
+@media(max-width:700px){.top5-grid{grid-template-columns:repeat(2,1fr)}}
+.top5-card{
+  background:#fff;border:1px solid rgba(10,22,40,.1);border-radius:var(--radius);
+  padding:1.1rem .8rem 1rem;text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 2px 8px rgba(10,22,40,.06);transition:box-shadow .2s;
+}
+.top5-card:hover{box-shadow:0 4px 16px rgba(10,22,40,.12)}
+.top5-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);opacity:.3}
+.top5-card.rank1::before{opacity:1;background:linear-gradient(90deg,var(--gold),#fff8dc,var(--gold))}
+.top5-card.rank1{border-color:rgba(201,160,32,.4);background:linear-gradient(160deg,#fff9ec,#fff)}
+.top5-rank{font-family:'Oswald',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:rgba(10,22,40,.4);margin-bottom:.35rem}
+.top5-medal{font-size:1.3rem;line-height:1;margin-bottom:.3rem}
+.top5-name{font-family:'Playfair Display',serif;font-size:.82rem;font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:.5rem;min-height:2.2em;display:flex;align-items:center;justify-content:center}
+.top5-score{font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:700}
+.top5-picks{font-size:.65rem;color:rgba(10,22,40,.5);margin-top:.3rem;line-height:1.4}
+
 /* ── EXCLUSION BOX ───────────────────────────────────────────────────── */
 .exclusion-box{
   margin-top:2rem;
@@ -537,16 +556,16 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
   <div class="highlights-banner" id="highlights-banner">
     <div class="hl-track" id="hl-track">
       <div class="hl-card">
-        <span class="hl-tag">VGC Update</span>
-        <span class="hl-text">Stefano Ruscitti is trending at VGC — strong scoring in recent rounds puts him as one to watch in the pool this year.</span>
+        <span class="hl-tag">🏆 US Open — R3 Complete</span>
+        <span class="hl-text">Wyndham Clark leads Shinnecock Hills at <strong>−7</strong> after 54 holes. Xander Schauffele and Sam Burns are tied at <strong>E</strong> — great news for VGC members who picked them! R4 tees off Sunday Jun 22.</span>
       </div>
       <div class="hl-card">
-        <span class="hl-tag">OWGR News</span>
-        <span class="hl-text">Russell Henley has moved into the top 5 in the OWGR — Justin Rose is at #7, making him <strong>eligible</strong> as a VGC pool pick. If you had concerns about picking Justin Rose, you're good to go.</span>
+        <span class="hl-tag">🥇 Pool Leaders</span>
+        <span class="hl-text">Jordon Belton leads the VGC pool at <strong>−2</strong> — his scratch+ handicap and Tommy Fleetwood / Xander Schauffele picks are paying off. Johnny Nardi sits just behind at <strong>−1</strong>. One round to go!</span>
       </div>
       <div class="hl-card">
-        <span class="hl-tag">Picks Deadline</span>
-        <span class="hl-text">Picks are visible now — changes accepted until <strong>Thursday June 18 at 3am</strong>. Resubmit via the Submit Picks tab to update.</span>
+        <span class="hl-tag">📅 What's Next</span>
+        <span class="hl-text">R4 of the US Open plays Sunday Jun 22 — final scores locked after play completes. VGC Round 2 is <strong>Wednesday Jun 25</strong> (Men's Night). Your best net score from Jun 17 or Jun 25 counts toward your total.</span>
       </div>
     </div>
     <div class="hl-dots" id="hl-dots">
@@ -573,6 +592,12 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
   <div class="lb-search-wrap">
     <input class="lb-search" id="lb-search" type="text" placeholder="🔍  Find your name…" oninput="filterLeaderboard(this.value)" autocomplete="off">
     <button class="lb-search-clear" onclick="clearSearch()" title="Clear">✕</button>
+  </div>
+
+  <!-- TOP 5 PODIUM -->
+  <div class="top5-wrap" id="top5-wrap">
+    <div class="section-eyebrow" style="margin-bottom:.75rem">Current Standings</div>
+    <div class="top5-grid" id="top5-grid"><!-- rendered by JS --></div>
   </div>
 
   <!-- LIVE US OPEN LINK -->
@@ -1007,6 +1032,36 @@ function startSlider() {
 let lbSortCol = 'rank', lbSortDir = 'asc';
 let prevRanks = {}; // name -> previous rank
 
+/* ── RENDER: TOP 5 PODIUM ────────────────────────────────────────────── */
+function renderTop5() {
+  const grid = document.getElementById('top5-grid');
+  if (!grid) return;
+  const medals = ['🥇','🥈','🥉','4️⃣','5️⃣'];
+  const data = players.filter(p => p.paid).map(p => ({
+    name: p.name,
+    totalToPar: totalToPar(p),
+    pick1: p.pgaPick1, pick2: p.pgaPick2
+  })).filter(p => p.totalToPar != null);
+  data.sort((a,b) => a.totalToPar - b.totalToPar);
+  const top5 = data.slice(0,5);
+  grid.innerHTML = top5.map((p, i) => {
+    const tp = p.totalToPar;
+    const cls = tp < 0 ? 'score-under' : tp > 0 ? 'score-over' : 'score-even';
+    const lbl = tp === 0 ? 'E' : (tp > 0 ? '+' : '') + tp;
+    const fmtS = v => v === 0 ? 'E' : (v > 0 ? '+' : '') + v;
+    const s1 = p.pick1 && pgaScores[p.pick1] != null ? fmtS(pgaScores[p.pick1]) : '—';
+    const s2 = p.pick2 && pgaScores[p.pick2] != null ? fmtS(pgaScores[p.pick2]) : '—';
+    const shortPick = name => name ? name.split(' ').pop() : '—';
+    return `<div class="top5-card${i===0?' rank1':''}">
+      <div class="top5-rank">Rank ${i+1}</div>
+      <div class="top5-medal">${medals[i]}</div>
+      <div class="top5-name">${p.name}</div>
+      <div class="top5-score ${cls}">${lbl}</div>
+      <div class="top5-picks">${shortPick(p.pick1)} ${s1} · ${shortPick(p.pick2)} ${s2}</div>
+    </div>`;
+  }).join('');
+}
+
 /* ── RENDER: LEADERBOARD ─────────────────────────────────────────────── */
 function renderLeaderboard() {
   const data = players.filter(p => p.paid).map(p => {
@@ -1337,6 +1392,7 @@ function startCountdown() {
 /* ── INIT ────────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', ()=>{
   updateTicker();
+  renderTop5();
   renderLeaderboard();
   renderEntries();
   renderPayouts();
