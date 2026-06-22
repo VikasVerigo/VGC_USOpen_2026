@@ -274,6 +274,40 @@ tbody tr.winner-row:nth-child(even) td{background:#fffbef !important}
 .payout-amount{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold)}
 .payout-note{font-size:.72rem;color:rgba(10,22,40,.4);margin-top:.3rem}
 
+/* ── CHAMPIONS BANNER ───────────────────────────────────────────────── */
+.champ-banner{
+  display:none;
+  background:linear-gradient(135deg,var(--navy) 0%,#1a3a6b 50%,var(--navy) 100%);
+  border-radius:var(--radius);padding:2.5rem 2rem 2rem;margin:1.5rem 0;
+  position:relative;overflow:hidden;text-align:center;
+}
+.champ-banner.visible{display:block}
+.champ-banner::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(201,160,32,.25) 0%,transparent 70%);
+}
+.champ-stars{font-size:1.5rem;letter-spacing:.5rem;margin-bottom:.75rem;position:relative}
+.champ-eyebrow{font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:700;
+  letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;position:relative}
+.champ-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;
+  color:#fff;line-height:1.15;margin-bottom:.4rem;position:relative}
+.champ-title em{color:var(--gold);font-style:normal}
+.champ-sub{font-size:.85rem;color:rgba(255,255,255,.65);margin-bottom:2rem;position:relative}
+.champ-podium{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;position:relative}
+.champ-card{
+  background:rgba(255,255,255,.08);border:1px solid rgba(201,160,32,.25);
+  border-radius:var(--radius);padding:1.2rem 1.5rem;min-width:150px;text-align:center;
+  backdrop-filter:blur(4px);
+}
+.champ-card.gold{background:rgba(201,160,32,.18);border-color:var(--gold);border-width:2px}
+.champ-pos{font-family:'Oswald',sans-serif;font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.3rem}
+.champ-medal{font-size:1.8rem;margin-bottom:.3rem}
+.champ-name{font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;color:#fff;margin-bottom:.4rem;line-height:1.2}
+.champ-score-final{font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700}
+.champ-picks-note{font-size:.63rem;color:rgba(255,255,255,.45);margin-top:.35rem;line-height:1.4}
+.champ-usopen-note{font-size:.75rem;color:rgba(255,255,255,.5);margin-top:1.5rem;position:relative;font-style:italic}
+
 /* ── TOP 5 PODIUM ────────────────────────────────────────────────────── */
 .top5-wrap{margin:1.5rem 0 2rem}
 .top5-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem}
@@ -556,16 +590,16 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
   <div class="highlights-banner" id="highlights-banner">
     <div class="hl-track" id="hl-track">
       <div class="hl-card">
-        <span class="hl-tag">🏆 US Open — R3 Complete</span>
-        <span class="hl-text">Wyndham Clark leads Shinnecock Hills at <strong>−7</strong> after 54 holes. Xander Schauffele and Sam Burns are tied at <strong>E</strong> — great news for VGC members who picked them! R4 tees off Sunday Jun 22.</span>
+        <span class="hl-tag">🏆 US Open Complete</span>
+        <span class="hl-text">Wyndham Clark wins the 2026 US Open at Shinnecock Hills, finishing at <strong>−4</strong>. Sam Burns finished runner-up at <strong>−3</strong>. US Open scores are now locked — these are your final PGA pick totals.</span>
       </div>
       <div class="hl-card">
-        <span class="hl-tag">🥇 Pool Leaders</span>
-        <span class="hl-text">Jordon Belton leads the VGC pool at <strong>−2</strong> — his scratch+ handicap and Tommy Fleetwood / Xander Schauffele picks are paying off. Johnny Nardi sits just behind at <strong>−1</strong>. One round to go!</span>
+        <span class="hl-tag">⚠️ Not Final Yet</span>
+        <span class="hl-text">The leaderboard shows <strong>interim standings</strong>. VGC Round 2 plays <strong>Wednesday Jun 24</strong> (Men's Night). Your best net score from Jun 17 <em>or</em> Jun 24 will be used — Round 2 could change the rankings significantly!</span>
       </div>
       <div class="hl-card">
         <span class="hl-tag">📅 What's Next</span>
-        <span class="hl-text">R4 of the US Open plays Sunday Jun 22 — final scores locked after play completes. VGC Round 2 is <strong>Wednesday Jun 25</strong> (Men's Night). Your best net score from Jun 17 or Jun 25 counts toward your total.</span>
+        <span class="hl-text">Play your best on <strong>Wednesday Jun 24</strong> — if your net score beats your Jun 17 score, it replaces it. Final combined standings (VGC net + PGA picks) and payouts will be issued after Round 2. Good luck!</span>
       </div>
     </div>
     <div class="hl-dots" id="hl-dots">
@@ -592,6 +626,16 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
   <div class="lb-search-wrap">
     <input class="lb-search" id="lb-search" type="text" placeholder="🔍  Find your name…" oninput="filterLeaderboard(this.value)" autocomplete="off">
     <button class="lb-search-clear" onclick="clearSearch()" title="Clear">✕</button>
+  </div>
+
+  <!-- CHAMPIONS BANNER (shown when status = "final") -->
+  <div class="champ-banner" id="champ-banner">
+    <div class="champ-stars">⛳ ⛳ ⛳</div>
+    <div class="champ-eyebrow" id="champ-eyebrow">VGC US Open 2026 · Interim Standings</div>
+    <div class="champ-title" id="champ-title">US Open Complete — <em>Round 2 Pending</em></div>
+    <div class="champ-sub" id="champ-sub">Shinnecock Hills done · VGC Round 2 plays Jun 24 · Best of 2 Wednesday nets count</div>
+    <div class="champ-podium" id="champ-podium"><!-- rendered by JS --></div>
+    <div class="champ-usopen-note" id="champ-usopen-note"></div>
   </div>
 
   <!-- TOP 5 PODIUM -->
@@ -886,7 +930,7 @@ const config = {
   payouts: [200, 150, 100, 80, 60, 40, 30, 20],
   /* status: "picks-locked" | "picks-locked" | "r1-done" |
              "pga-live" | "r2-pending" | "final"           */
-  status: "pga-live"
+  status: "r2-pending"
 };
 
 /* ── PLAYER DATA ─────────────────────────────────────────────────────────
@@ -936,27 +980,26 @@ const players = [
   { name:"Wayne Davidson",       paid:true,  paymentStatus:"Yes",     pgaPick1:"Patrick Reed", pgaPick2:"Tommy Fleetwood", grossR1:82, hcpR1:5, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
 ];
 
-/* ── PGA SCORES (update daily — to-par cumulative) ───────────────────── */
-// Round 3 in progress (Jun 20). Cut was +4. MC penalty: +10/round for R3+R4.
+/* ── PGA SCORES (FINAL — US Open 2026 official results, Jun 21) ──────── */
 const pgaScores = {
-  "Aaron Rai":          3,   // R3 cumulative
+  "Aaron Rai":          2,   // FINAL: T11 (+2)
   "Brooks Koepka":     30,   // MC: R2 +10 + penalty +20
   "Bryson DeChambeau": 25,   // MC: R2 +5  + penalty +20
-  "Chris Gotterup":     7,   // R3 cumulative
-  "Collin Morikawa":    1,   // R3 cumulative
-  "Hideki Matsuyama":  11,   // R3 cumulative
+  "Chris Gotterup":     8,   // FINAL: T43 (+8)
+  "Collin Morikawa":    3,   // FINAL: T17 (+3)
+  "Hideki Matsuyama":  14,   // FINAL: T65 (+14)
   "J.J. Spaun":        28,   // MC: R2 +8  + penalty +20
   "Jon Rahm":          26,   // MC: R2 +6  + penalty +20
-  "Justin Rose":        4,   // R3 cumulative
-  "Justin Thomas":      4,   // R3 cumulative
-  "Ludvig Aberg":       7,   // R3 cumulative
+  "Justin Rose":        2,   // FINAL: T11 (+2)
+  "Justin Thomas":      3,   // FINAL: T17 (+3)
+  "Ludvig Aberg":       3,   // FINAL: T17 (+3)
   "Patrick Cantlay":   26,   // MC: R2 +6  + penalty +20
   "Patrick Reed":      25,   // MC: R2 +5  + penalty +20
-  "Sam Burns":          0,   // R3 cumulative (E)
+  "Sam Burns":         -3,   // FINAL: 2nd (-3)
   "Si Woo Kim":        26,   // MC: R2 +6  + penalty +20
-  "Tommy Fleetwood":    1,   // R3 cumulative
-  "Tyrrell Hatton":     4,   // R3 cumulative
-  "Xander Schauffele":  0,   // R3 cumulative (E)
+  "Tommy Fleetwood":    2,   // FINAL: T11 (+2)
+  "Tyrrell Hatton":     1,   // FINAL: T7 (+1)
+  "Xander Schauffele":  2,   // FINAL: T11 (+2)
 };
 function getPgaScore(name) {
   if (!name) return null;
@@ -1031,6 +1074,51 @@ function startSlider() {
 /* ── SORT STATE ──────────────────────────────────────────────────────── */
 let lbSortCol = 'rank', lbSortDir = 'asc';
 let prevRanks = {}; // name -> previous rank
+
+/* ── RENDER: CHAMPIONS BANNER ────────────────────────────────────────── */
+function renderChampionsBanner() {
+  const banner = document.getElementById('champ-banner');
+  if (!banner || !['r2-pending','final'].includes(config.status)) return;
+  banner.classList.add('visible');
+
+  const medals = ['🥇','🥈','🥉','4️⃣','5️⃣'];
+  const data = players.filter(p => p.paid).map(p => ({
+    name: p.name,
+    totalToPar: totalToPar(p),
+    pick1: p.pgaPick1, pick2: p.pgaPick2
+  })).filter(p => p.totalToPar != null);
+  data.sort((a,b) => a.totalToPar - b.totalToPar);
+  const top5 = data.slice(0,5);
+
+  const fmtS = v => v === 0 ? 'E' : (v > 0 ? '+' : '') + v;
+
+  document.getElementById('champ-podium').innerHTML = top5.map((p, i) => {
+    const tp = p.totalToPar;
+    const cls = tp < 0 ? 'score-under' : tp > 0 ? 'score-over' : 'score-even';
+    const lbl = tp === 0 ? 'E' : (tp > 0 ? '+' : '') + tp;
+    const s1 = p.pick1 && pgaScores[p.pick1] != null ? fmtS(pgaScores[p.pick1]) : '—';
+    const s2 = p.pick2 && pgaScores[p.pick2] != null ? fmtS(pgaScores[p.pick2]) : '—';
+    const shortName = n => n ? n.split(' ').pop() : '—';
+    return `<div class="champ-card${i===0?' gold':''}">
+      <div class="champ-pos">Place ${i+1}</div>
+      <div class="champ-medal">${medals[i]}</div>
+      <div class="champ-name">${p.name}</div>
+      <div class="champ-score-final ${cls}">${lbl}</div>
+      <div class="champ-picks-note">${shortName(p.pick1)} ${s1} · ${shortName(p.pick2)} ${s2}</div>
+    </div>`;
+  }).join('');
+
+  if (config.status === 'final') {
+    document.querySelector('.champ-stars').textContent = '⭐ ⭐ ⭐';
+    document.getElementById('champ-eyebrow').textContent = 'VGC US Open 2026 · Official Results';
+    document.getElementById('champ-title').innerHTML = 'Congratulations to our <em>Champions</em>';
+    document.getElementById('champ-sub').textContent = 'Shinnecock Hills · June 18–21, 2026 · Won by Wyndham Clark (−4)';
+  }
+  document.getElementById('champ-usopen-note').textContent =
+    config.status === 'final'
+      ? '🏆 US Open Winner: Wyndham Clark −4  ·  Runner-up: Sam Burns −3  ·  Shinnecock Hills, Southampton NY'
+      : '⚠️ Standings are not final — VGC Round 2 plays Jun 24. Your best Wednesday net score (Jun 17 or Jun 24) will be used.';
+}
 
 /* ── RENDER: TOP 5 PODIUM ────────────────────────────────────────────── */
 function renderTop5() {
@@ -1392,6 +1480,7 @@ function startCountdown() {
 /* ── INIT ────────────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', ()=>{
   updateTicker();
+  renderChampionsBanner();
   renderTop5();
   renderLeaderboard();
   renderEntries();
