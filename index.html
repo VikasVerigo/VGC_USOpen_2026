@@ -590,16 +590,16 @@ footer{border-top:1px solid rgba(10,22,40,.1);padding:2.5rem 0 2rem;text-align:c
   <div class="highlights-banner" id="highlights-banner">
     <div class="hl-track" id="hl-track">
       <div class="hl-card">
-        <span class="hl-tag">🏆 US Open Complete</span>
-        <span class="hl-text">Wyndham Clark wins the 2026 US Open at Shinnecock Hills, finishing at <strong>−4</strong>. Sam Burns finished runner-up at <strong>−3</strong>. US Open scores are now locked — these are your final PGA pick totals.</span>
+        <span class="hl-tag">🏆 Tournament Complete</span>
+        <span class="hl-text">The VGC US Open 2026 pool is officially closed! Both VGC rounds (Jun 17 &amp; Jun 24) and all four rounds at Shinnecock Hills are in the books. Final standings and payouts are shown below.</span>
       </div>
       <div class="hl-card">
-        <span class="hl-tag">⚠️ Not Final Yet</span>
-        <span class="hl-text">The leaderboard shows <strong>interim standings</strong>. VGC Round 2 plays <strong>Wednesday Jun 24</strong> (Men's Night). Your best net score from Jun 17 <em>or</em> Jun 24 will be used — Round 2 could change the rankings significantly!</span>
+        <span class="hl-tag">⛳ How Scores Were Calculated</span>
+        <span class="hl-text">Each participant's <strong>best net score</strong> from Jun 17 or Jun 24 Men's Night was combined with the <strong>cumulative to-par</strong> of their two PGA Tour picks at the US Open. Lowest combined total wins.</span>
       </div>
       <div class="hl-card">
-        <span class="hl-tag">📅 What's Next</span>
-        <span class="hl-text">Play your best on <strong>Wednesday Jun 24</strong> — if your net score beats your Jun 17 score, it replaces it. Final combined standings (VGC net + PGA picks) and payouts will be issued after Round 2. Good luck!</span>
+        <span class="hl-tag">🥇 US Open Champion</span>
+        <span class="hl-text">Wyndham Clark wins the 2026 US Open at <strong>−4</strong>, holding off Sam Burns (−3) in a thrilling final round at Shinnecock Hills. Sam Burns was the best VGC pick of the tournament for anyone who had him!</span>
       </div>
     </div>
     <div class="hl-dots" id="hl-dots">
@@ -930,7 +930,7 @@ const config = {
   payouts: [200, 150, 100, 80, 60, 40, 30, 20],
   /* status: "picks-locked" | "picks-locked" | "r1-done" |
              "pga-live" | "r2-pending" | "final"           */
-  status: "r2-pending"
+  status: "final"
 };
 
 /* ── PLAYER DATA ─────────────────────────────────────────────────────────
@@ -944,40 +944,40 @@ const config = {
    All null = not yet available.
    ──────────────────────────────────────────────────────────────────────── */
 const players = [
-  { name:"Alessandro Carnovale", paid:true,  paymentStatus:"Yes",     pgaPick1:"Brooks Koepka", pgaPick2:"Sam Burns", grossR1:75, hcpR1:1, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Alessandro Carnovale", paid:true,  paymentStatus:"Yes",     pgaPick1:"Brooks Koepka", pgaPick2:"Sam Burns", grossR1:75, hcpR1:1, grossR2:79, hcpR2:6, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Anthony Mauro",        paid:true,  paymentStatus:"Yes",     pgaPick1:"Xander Schauffele", pgaPick2:"Jon Rahm", grossR1:74, hcpR1:1, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Claude Nobauer",       paid:true,  paymentStatus:"Yes",     pgaPick1:"Collin Morikawa", pgaPick2:"Justin Rose", grossR1:76, hcpR1:0, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"David Akins",          paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Patrick Reed", grossR1:77, hcpR1:4, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"David Akins",          paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Patrick Reed", grossR1:77, hcpR1:4, grossR2:86, hcpR2:8, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Dean Collier",         paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Xander Schauffele", grossR1:78, hcpR1:1, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Edwin Margawang",      paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Jon Rahm", grossR1:80, hcpR1:6, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Fady Hayek (1)",       paid:true,  paymentStatus:"Yes",     pgaPick1:"J.J. Spaun", pgaPick2:"Xander Schauffele", grossR1:74, hcpR1:7, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Fady Hayek (2)",       paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Jon Rahm", grossR1:74, hcpR1:7, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Frank Bruno",          paid:true,  paymentStatus:"Yes", pgaPick1:"Xander Schauffele", pgaPick2:"Ludvig Aberg",grossR1:83, hcpR1:10, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Frank Bruno",          paid:true,  paymentStatus:"Yes", pgaPick1:"Xander Schauffele", pgaPick2:"Ludvig Aberg",grossR1:83, hcpR1:10, grossR2:86, hcpR2:13, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Jason Macaulay",       paid:true,  paymentStatus:"Yes",     pgaPick1:"Patrick Reed", pgaPick2:"Chris Gotterup", grossR1:74, hcpR1:0, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Jim Hopkins",          paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Hideki Matsuyama", grossR1:81, hcpR1:4, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Johnny Nardi",         paid:true,  paymentStatus:"Yes", pgaPick1:"Tommy Fleetwood", pgaPick2:"Collin Morikawa", grossR1:69, hcpR1:0, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Jordon Belton",        paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Xander Schauffele", grossR1:62, hcpR1:-7, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Karim Esmail",         paid:true,  paymentStatus:"Yes",     pgaPick1:"Justin Rose", pgaPick2:"Ludvig Aberg", grossR1:84, hcpR1:7, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Kulbir Bhatti",        paid:true,  paymentStatus:"Yes",     pgaPick1:"Ludvig Aberg", pgaPick2:"Aaron Rai", grossR1:81, hcpR1:6, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Ken Atkinson",         paid:true,  paymentStatus:"Yes",     pgaPick1:"Patrick Reed", pgaPick2:"Tommy Fleetwood", grossR1:79, hcpR1:3, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Jim Hopkins",          paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Hideki Matsuyama", grossR1:81, hcpR1:4, grossR2:85, hcpR2:8, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Johnny Nardi",         paid:true,  paymentStatus:"Yes", pgaPick1:"Tommy Fleetwood", pgaPick2:"Collin Morikawa", grossR1:69, hcpR1:0, grossR2:84, hcpR2:4, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Jordon Belton",        paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Xander Schauffele", grossR1:62, hcpR1:-7, grossR2:76, hcpR2:-2, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Karim Esmail",         paid:true,  paymentStatus:"Yes",     pgaPick1:"Justin Rose", pgaPick2:"Ludvig Aberg", grossR1:84, hcpR1:7, grossR2:92, hcpR2:9, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Kulbir Bhatti",        paid:true,  paymentStatus:"Yes",     pgaPick1:"Ludvig Aberg", pgaPick2:"Aaron Rai", grossR1:81, hcpR1:6, grossR2:91, hcpR2:9, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Ken Atkinson",         paid:true,  paymentStatus:"Yes",     pgaPick1:"Patrick Reed", pgaPick2:"Tommy Fleetwood", grossR1:79, hcpR1:3, grossR2:90, hcpR2:8, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Kyle Ulinder",         paid:true,  paymentStatus:"Yes",     pgaPick1:"Ludvig Aberg", pgaPick2:"Jon Rahm", grossR1:70, hcpR1:-6, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Lindsay Brooks",       paid:true,  paymentStatus:"Yes",     pgaPick1:"Justin Rose", pgaPick2:"Tommy Fleetwood", grossR1:81, hcpR1:3, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Lindsay Brooks",       paid:true,  paymentStatus:"Yes",     pgaPick1:"Justin Rose", pgaPick2:"Tommy Fleetwood", grossR1:81, hcpR1:3, grossR2:92, hcpR2:7, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Mark Halvorsen",       paid:true,  paymentStatus:"Yes",     pgaPick1:"Si Woo Kim", pgaPick2:"Sam Burns", grossR1:79, hcpR1:5, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Mike Kirilenko (1)",   paid:true,  paymentStatus:"Yes", pgaPick1:"Brooks Koepka", pgaPick2:"Ludvig Aberg", grossR1:79, hcpR1:10, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Mike Kirilenko (2)",   paid:true,  paymentStatus:"Yes", pgaPick1:"J.J. Spaun", pgaPick2:"Xander Schauffele", grossR1:79, hcpR1:10, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Navraj Kahlon",        paid:true,  paymentStatus:"Yes",     pgaPick1:"Tyrrell Hatton", pgaPick2:"Jon Rahm", grossR1:85, hcpR1:8, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Paul Aucoin",          paid:true,  paymentStatus:"Yes",     pgaPick1:"Jon Rahm", pgaPick2:"Tommy Fleetwood", grossR1:74, hcpR1:3, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Robert Lee",           paid:true,  paymentStatus:"Yes",     pgaPick1:"Ludvig Aberg", pgaPick2:"Brooks Koepka", grossR1:79, hcpR1:6, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Russ Davidson (1)",        paid:true,  paymentStatus:"Yes",     pgaPick1:"Xander Schauffele", pgaPick2:"Sam Burns", grossR1:79, hcpR1:1, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Russ Davidson (2)",    paid:true,  paymentStatus:"Yes",     pgaPick1:"Bryson DeChambeau", pgaPick2:"Tommy Fleetwood", grossR1:79, hcpR1:1, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Mike Kirilenko (1)",   paid:true,  paymentStatus:"Yes", pgaPick1:"Brooks Koepka", pgaPick2:"Ludvig Aberg", grossR1:79, hcpR1:10, grossR2:102, hcpR2:13, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Mike Kirilenko (2)",   paid:true,  paymentStatus:"Yes", pgaPick1:"J.J. Spaun", pgaPick2:"Xander Schauffele", grossR1:79, hcpR1:10, grossR2:102, hcpR2:13, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Navraj Kahlon",        paid:true,  paymentStatus:"Yes",     pgaPick1:"Tyrrell Hatton", pgaPick2:"Jon Rahm", grossR1:85, hcpR1:8, grossR2:99, hcpR2:12, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Paul Aucoin",          paid:true,  paymentStatus:"Yes",     pgaPick1:"Jon Rahm", pgaPick2:"Tommy Fleetwood", grossR1:74, hcpR1:3, grossR2:90, hcpR2:7, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Robert Lee",           paid:true,  paymentStatus:"Yes",     pgaPick1:"Ludvig Aberg", pgaPick2:"Brooks Koepka", grossR1:79, hcpR1:6, grossR2:86, hcpR2:10, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Russ Davidson (1)",        paid:true,  paymentStatus:"Yes",     pgaPick1:"Xander Schauffele", pgaPick2:"Sam Burns", grossR1:79, hcpR1:1, grossR2:78, hcpR2:5, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Russ Davidson (2)",    paid:true,  paymentStatus:"Yes",     pgaPick1:"Bryson DeChambeau", pgaPick2:"Tommy Fleetwood", grossR1:79, hcpR1:1, grossR2:78, hcpR2:5, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Sean Yoon",            paid:true,  paymentStatus:"Yes", pgaPick1:"Tommy Fleetwood", pgaPick2:"Hideki Matsuyama", grossR1:63, hcpR1:-6, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Ryan Shmyr",           paid:true,  paymentStatus:"Yes",     pgaPick1:"Justin Rose", pgaPick2:"J.J. Spaun", grossR1:95, hcpR1:10, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Ryan Shmyr",           paid:true,  paymentStatus:"Yes",     pgaPick1:"Justin Rose", pgaPick2:"J.J. Spaun", grossR1:95, hcpR1:10, grossR2:91, hcpR2:14, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Stefano Ruscitti",     paid:true,  paymentStatus:"Yes",     pgaPick1:"J.J. Spaun", pgaPick2:"Justin Thomas", grossR1:78, hcpR1:2, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Stephen Nielsen",      paid:true,  paymentStatus:"Yes",     pgaPick1:"Justin Rose", pgaPick2:"Patrick Cantlay", grossR1:72, hcpR1:1, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
   { name:"Tommy Truong",         paid:true,  paymentStatus:"Yes",     pgaPick1:"Jon Rahm", pgaPick2:"Xander Schauffele", grossR1:84, hcpR1:5, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Vikas Patel (1)",      paid:true,  paymentStatus:"Yes",     pgaPick1:"Jon Rahm", pgaPick2:"Justin Rose", grossR1:75, hcpR1:1, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Vikas Patel (2)",      paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Ludvig Aberg", grossR1:75, hcpR1:1, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
-  { name:"Wayne Davidson",       paid:true,  paymentStatus:"Yes",     pgaPick1:"Patrick Reed", pgaPick2:"Tommy Fleetwood", grossR1:82, hcpR1:5, grossR2:null, hcpR2:null, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Vikas Patel (1)",      paid:true,  paymentStatus:"Yes",     pgaPick1:"Jon Rahm", pgaPick2:"Justin Rose", grossR1:75, hcpR1:1, grossR2:90, hcpR2:6, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Vikas Patel (2)",      paid:true,  paymentStatus:"Yes",     pgaPick1:"Tommy Fleetwood", pgaPick2:"Ludvig Aberg", grossR1:75, hcpR1:1, grossR2:90, hcpR2:6, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
+  { name:"Wayne Davidson",       paid:true,  paymentStatus:"Yes",     pgaPick1:"Patrick Reed", pgaPick2:"Tommy Fleetwood", grossR1:82, hcpR1:5, grossR2:89, hcpR2:9, pgaTotal1:null, pgaTotal2:null, missedR1:false, missedR2:false },
 ];
 
 /* ── PGA SCORES (FINAL — US Open 2026 official results, Jun 21) ──────── */
